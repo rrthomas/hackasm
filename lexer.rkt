@@ -14,6 +14,7 @@
     ))
 
 (define-lex-abbrev digits (:+ (char-set "0123456789")))
+(define-lex-abbrev id (:: alphabetic (:+ (:or numeric alphabetic))))
 
 (define asm-lexer
   (lexer-srcloc
@@ -21,6 +22,7 @@
    [whitespace (token lexeme #:skip? #t)]
    [(from/stop-before "//" "\n") (token lexeme #:skip? #t)]
    [digits (token 'INTEGER (string->number lexeme))]
-   [reserved-terms (token lexeme lexeme)]))
+   [reserved-terms (token lexeme lexeme)]
+   [id (token 'ID lexeme)]))
 
 (provide asm-lexer)

@@ -1,7 +1,7 @@
 #lang brag
-hack-program: ([a-instr | c-instr] /NEWLINE)*
+hack-program: ([a-instr | c-instr] /NEWLINE)* [a-instr | c-instr]
 
-a-instr: /"@" INTEGER
+a-instr: /"@" (INTEGER | ID | "0" | "1")
 c-instr: [dest /"="] comp [/";" jump]
 
 dest: "M" | "D" | "DM" | "A" | "AM" | "AD" | "ADM"

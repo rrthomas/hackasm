@@ -2,17 +2,55 @@
 (define (format-word w)
   (~r w #:base 2 #:min-width 16 #:pad-string "0"))
 
-(define (a-instr ARG)
-  (displayln (format-word ARG)))
+(define syms
+  (make-hash
+   '(
+     ("SP" . 0)
+     ("LCL" . 1)
+     ("ARG" . 2)
+     ("THIS" . 3)
+     ("THAT" . 4)
 
-(define (c-instr . ARGS)
-  (displayln (format-word (apply + (arithmetic-shift 7 13) ARGS))))
+     ("R0" . 0)
+     ("R1" . 1)
+     ("R2" . 2)
+     ("R3" . 3)
+     ("R4" . 4)
+     ("R5" . 5)
+     ("R6" . 6)
+     ("R7" . 7)
+     ("R8" . 8)
+     ("R9" . 9)
+     ("R10" . 10)
+     ("R11" . 11)
+     ("R12" . 12)
+     ("R13" . 13)
+     ("R14" . 14)
+     ("R15" . 15)
+
+     ("SCREEN" . 16384)
+     ("KBD" . 24576)
+     )))
+(define (symbol-value var)
+  (hash-ref syms var
+            (lambda ()
+              (set! next-variable (add1 next-variable))
+              (hash-set! syms var next-variable)
+              next-variable)))
+(define next-variable 15)
+
+(define (a-instr imm)
+  (displayln (format-word (if (number? imm) imm (symbol-value imm)))))
+
+(define (c-instr . args)
+  (displayln (format-word (apply + (arithmetic-shift 7 13) args))))
 
 (define (dest inst)
   (define opcodes
     (hash "M" 1 "D" 2 "DM" 3 "A" 4 "AM" 5 "AD" 6 "ADM" 7))
   (arithmetic-shift (hash-ref opcodes inst) 3))
 
+; FIXME: write numbers in binary
 (define (comp inst)
   (define opcodes
     (hash "0" 42 "1" 63 "-1" 58 "D" 12 "A" 48 "M" 112
