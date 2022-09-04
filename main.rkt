@@ -8,4 +8,4 @@
           #:program "hackasm" ; FIXME: get name from project
           #:args (filename)
           filename)))
-    (read-syntax filename (open-input-file filename))))
+    (dynamic-require filename #f)))
