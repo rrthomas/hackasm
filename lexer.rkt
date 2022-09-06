@@ -21,8 +21,8 @@
    ["\n" (token 'NEWLINE lexeme)]
    [whitespace (token lexeme #:skip? #t)]
    [(from/stop-before "//" "\n") (token lexeme #:skip? #t)]
-   [digits (token 'INTEGER (string->number lexeme))]
    [reserved-terms (token lexeme lexeme)]
+   [digits (token 'INTEGER (string->number lexeme))]
    [id (token 'ID lexeme)]))
 
 (provide asm-lexer)

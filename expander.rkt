@@ -5,6 +5,10 @@
 (define syms
   (make-hash
    '(
+     ; Dummy entries to convert integers that lex as instructions back to integers
+     ("0" . 0)
+     ("1" . 1)
+
      ("SP" . 0)
      ("LCL" . 1)
      ("ARG" . 2)
