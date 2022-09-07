@@ -43,11 +43,20 @@
               next-variable)))
 (define next-variable 15)
 
+(define next-instruction 0)
 (define (a-instr imm)
-  (displayln (format-word (if (number? imm) imm (symbol-value imm)))))
+  (displayln (format-word (if (number? imm) imm (symbol-value imm))))
+  (set! next-instruction (add1 next-instruction)))
 
 (define (c-instr . args)
-  (displayln (format-word (apply + (arithmetic-shift 7 13) args))))
+  (displayln (format-word (apply + (arithmetic-shift 7 13) args)))
+  (set! next-instruction (add1 next-instruction)))
+
+(struct duplicate-label-signal ())
+(define (label lab)
+  (if (hash-has-key? syms lab)
+      (raise (duplicate-label-signal))
+      (hash-set! syms lab next-instruction)))
 
 (define (dest inst)
   (define opcodes
@@ -69,7 +78,7 @@
     (hash "JGT" 1 "JEQ" 2 "JGE" 3 "JLT" 4 "JNE" 5 "JLE" 6 "JMP" 7))
   (hash-ref opcodes inst))
 
-(provide a-instr c-instr dest comp jump)
+(provide a-instr c-instr label dest comp jump)
 
 (define-macro (hack-module-begin (hack-program INSTR ...))
   #'(#%module-begin

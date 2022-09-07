@@ -4,7 +4,7 @@
 ; Use tests from https://beautifulracket.com/basic/the-lexer.html
 
 (define-lex-abbrev reserved-terms
-  (:or "@" "=" ";"
+  (:or "@" "=" ";" "(" ")"
        "M" "DM" "A" "AM" "AD" "ADM"
        "0" "1" "-1" "D" "A" "!D" "!A" "-D" "-A"
        "D+1" "A+1" "D-1" "A-1" "D+A" "D-A" "A-D"
