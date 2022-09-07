@@ -8,4 +8,6 @@
           #:program "hackasm" ; FIXME: get name from project
           #:args (filename)
           filename)))
-    (dynamic-require filename #f)))
+    (parameterize ([current-namespace (make-base-empty-namespace)])
+      (eval (read-syntax filename (open-input-file filename)))
+      (dynamic-require '(quote hackasm-mod) #f))))
