@@ -15,7 +15,7 @@
     ))
 
 (define-lex-abbrev digits (:+ (char-set "0123456789")))
-(define-lex-abbrev id (:: alphabetic (:* (:or numeric alphabetic "_"))))
+(define-lex-abbrev id (:: alphabetic (:* (:or numeric alphabetic "_" "." "$"))))
 
 (define asm-lexer
   (lexer-srcloc
