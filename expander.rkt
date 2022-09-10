@@ -1,7 +1,4 @@
 #lang br/quicklang
-(define (format-word w)
-  (~r w #:base 2 #:min-width 16 #:pad-string "0"))
-
 (define syms
   (make-hash
    '(
@@ -45,12 +42,12 @@
 
 (define next-instruction 0)
 (define (a-instr imm)
-  (displayln (format-word (if (number? imm) imm (symbol-value imm))))
-  (set! next-instruction (add1 next-instruction)))
+  (set! next-instruction (add1 next-instruction))
+  imm)
 
 (define (c-instr . args)
-  (displayln (format-word (apply + (arithmetic-shift 7 13) args)))
-  (set! next-instruction (add1 next-instruction)))
+  (set! next-instruction (add1 next-instruction))
+  (apply + (arithmetic-shift 7 13) args))
 
 (struct duplicate-label-signal ())
 (define (label lab)
@@ -80,7 +77,16 @@
 
 (provide a-instr c-instr label dest comp jump)
 
+(define (format-word w)
+  (~r w #:base 2 #:min-width 16 #:pad-string "0"))
+
 (define-macro (hack-module-begin (hack-program INSTR ...))
   #'(#%module-begin
-     INSTR ...))
+     (void (filter-map
+            (lambda (i)
+              (when (not (void? i)) ; labels produce void
+                (displayln
+                 (format-word
+                  (if (number? i) i (symbol-value i))))))
+            (list INSTR ...)))))
 (provide (rename-out [hack-module-begin #%module-begin]))
