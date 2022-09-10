@@ -57,8 +57,14 @@
 
 (define (dest inst)
   (define opcodes
-    (hash "M" 1 "D" 2 "DM" 3 "A" 4 "AM" 5 "AD" 6 "ADM" 7))
-  (arithmetic-shift (hash-ref opcodes inst) 3))
+    (hash #\M 1 #\D 2 #\A 4))
+  (arithmetic-shift
+   (apply
+    bitwise-ior
+    (map
+     (lambda (c) (hash-ref opcodes c))
+     (string->list inst)))
+   3))
 
 ; FIXME: write numbers in binary
 (define (comp inst)
