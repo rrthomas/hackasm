@@ -1,10 +1,9 @@
 #lang brag
-hack-program: ([instr] /NEWLINE)* [instr]
+hack-program: ([a-instr | c-instr | label] /NEWLINE)* [a-instr | c-instr | label]
 
-@instr: a-instr | c-instr | label
-a-instr: /"@" (INTEGER | ID | "0" | "1")
-c-instr: [dest /"="] comp [/";" jump]
-label: /"(" ID /")"
+a-instr: "@" (INTEGER | ID | "0" | "1")
+c-instr: [dest "="] comp [";" jump]
+label: "(" ID ")"
 
 dest: "M" | "D" | "A" |
       "AD" | "AM" | "DA" | "DM" | "MA" | "MD" |

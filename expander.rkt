@@ -41,16 +41,16 @@
 (define next-variable 15)
 
 (define next-instruction 0)
-(define (a-instr imm)
+(define (a-instr _ imm)
   (set! next-instruction (add1 next-instruction))
   imm)
 
 (define (c-instr . args)
   (set! next-instruction (add1 next-instruction))
-  (apply + (arithmetic-shift 7 13) args))
+  (apply + (arithmetic-shift 7 13) (filter number? args)))
 
 (struct duplicate-label-signal ())
-(define (label lab)
+(define (label _1 lab _2)
   (if (hash-has-key? syms lab)
       (raise (duplicate-label-signal))
       (hash-set! syms lab next-instruction)))
