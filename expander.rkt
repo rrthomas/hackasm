@@ -83,12 +83,8 @@
 
 (define-macro (hack-module-begin (INSTR ...))
   #'(#%module-begin
-     (void (filter-map
-            (lambda (i)
-              (unless (void? i) ; labels produce void
-                (displayln
-                 (format-word
-                  (if (number? i) i (symbol-value i)))))
-              #f)
-            (list INSTR ...)))))
+     (for ([i (list INSTR ...)] #:unless (void? i)) ; labels produce void
+       (displayln
+        (format-word
+         (if (number? i) i (symbol-value i)))))))
 (provide (rename-out [hack-module-begin #%module-begin]))
