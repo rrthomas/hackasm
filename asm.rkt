@@ -5,7 +5,7 @@
   (provide read-syntax))
 
 (define (read-syntax path port)
-  (define parse-tree (parse path (make-tokenizer port path)))
+  (define parse-tree (parse (make-tokenizer port path)))
   (datum->syntax
    #f
    `(,#'module hackasm-mod hackasm/expander
