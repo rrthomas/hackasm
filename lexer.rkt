@@ -1,4 +1,4 @@
-#lang br
+#lang racket
 (require parser-tools/lex (prefix-in : parser-tools/lex-sre))
 
 ; Use tests from https://beautifulracket.com/basic/the-lexer.html

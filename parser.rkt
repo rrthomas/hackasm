@@ -1,4 +1,4 @@
-#lang br
+#lang racket
 (require "lexer.rkt")
 (require parser-tools/yacc)
 

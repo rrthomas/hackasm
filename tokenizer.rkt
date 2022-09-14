@@ -1,4 +1,4 @@
-#lang br
+#lang racket
 (require "lexer.rkt" brag/support)
 
 (define (make-tokenizer ip [path #f])

@@ -1,4 +1,4 @@
-#lang br/quicklang
+#lang racket
 (require "parser.rkt" "tokenizer.rkt")
 
 (module+ reader
