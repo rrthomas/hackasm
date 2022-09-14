@@ -27,9 +27,7 @@
      [() '()]
      )
 
-    (a-instr
-     [(AT immediate) $2]
-     )
+    (a-instr [(AT immediate) $2])
     (immediate
      [(INTEGER) $1]
      [(ID) $1]
@@ -53,9 +51,7 @@
      )
     (jump [(JUMP) $1])
 
-    (label
-     [(LPAREN ID RPAREN) $2]
-     )
+    (label [(LPAREN ID RPAREN) $2])
     )))
 
 (provide parse)
