@@ -61,13 +61,18 @@
      (string->list inst)))
    3))
 
-; FIXME: write numbers in binary
 (define comp-opcodes
-  (hash "0" 42 "1" 63 "-1" 58 "D" 12 "A" 48 "M" 112
-        "!D" 13 "!A" 49 "!M" 113 "-D" 15 "-A" 51 "-M" 115
-        "D+1" 31 "A+1" 55 "M+1" 119 "D-1" 14 "A-1" 50 "M-1" 114
-        "D+A" 2 "D+M" 66 "D-A" 19 "D-M" 83 "A-D" 7 "M-D" 71
-        "D&A" 0 "D&M" 64 "D|A" 21 "D|M" 85))
+  (hash "0" #b101010 "1" #b111111 "-1" #b111010
+        "D" #b1100 "A" #b110000 "M" #b1110000
+        "!D" #b1101 "!A" #b110001 "!M" #b1110001
+        "-D" #b1111 "-A" #b110011 "-M" #b1110011
+        "D+1" #b11111 "A+1" #b110111 "M+1" #b1110111
+        "D-1" #b1110 "A-1" #b110010 "M-1" #b1110010
+        "D+A" #b10 "D+M" #b1000010
+        "D-A" #b10011 "D-M" #b1010011
+        "A-D" #b111 "M-D" #b1000111
+        "D&A" #b0 "D&M" #b1000000
+        "D|A" #b10101 "D|M" #b1010101))
 (define (comp inst)
   (arithmetic-shift (hash-ref comp-opcodes inst) 6))
 
